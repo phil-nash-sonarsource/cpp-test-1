@@ -10,10 +10,6 @@ jobs:
     name: SonarCloud
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      
       - name: Install Build Wrapper
         shell: bash
         run: |
@@ -26,6 +22,10 @@ jobs:
           curl -L -O https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.4.0.2170-linux.zip
           unzip sonar-scanner-cli-4.4.0.2170-linux.zip
           
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      
       - name: Build
         shell: bash
         run: |

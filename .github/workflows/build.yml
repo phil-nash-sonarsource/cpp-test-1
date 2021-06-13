@@ -19,6 +19,7 @@ jobs:
           SONAR_PROJECT_NAME: cpp-test-1
           SONAR_ORGANIZATION: phil-nash-sonarsource
           SONAR_HOST_URL: https://sonarcloud.io
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           mkdir $HOME/.sonar
           export SONAR_SCANNER_VERSION=4.2.0.1873

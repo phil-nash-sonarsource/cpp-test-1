@@ -33,12 +33,10 @@ jobs:
           
       - name: Scan with SonarCloud
         env:
-          SONAR_PROJECT_KEY: phil-nash-sonarsource_cpp-test-1
           SONAR_PROJECT_NAME: cpp-test-1
-          SONAR_ORGANIZATION: phil-nash-sonarsource
           SONAR_HOST_URL: https://sonarcloud.io
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: bash
-        run: sonar-scanner-4.4.0.2170-linux/bin/sonar-scanner -Dsonar.host.url=https://sonarcloud.io -Dsonar.branch.name=main -Dsonar.organization=$SONAR_ORGANIZATION -Dsonar.projectKey=$SONAR_PROJECT_KEY -Dsonar.cfamily.build-wrapper-output=cfamily-output -Dsonar.login=$SONAR_TOKEN
+        run: sonar-scanner-4.4.0.2170-linux/bin/sonar-scanner -Dsonar.host.url=https://sonarcloud.io -Dsonar.branch.name=main -Dsonar.cfamily.build-wrapper-output=cfamily-output -Dsonar.login=$SONAR_TOKEN
           

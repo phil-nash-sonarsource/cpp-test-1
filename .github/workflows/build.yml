@@ -31,40 +31,5 @@ jobs:
         run: |
           curl -L -O https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.4.0.2170-linux.zip
           unzip sonar-scanner-cli-4.4.0.2170-linux.zip
-          sonar-scanner-4.4.0.2170-linux/bin/sonar-scanner -Dsonar.host.url=https://sonarcloud.io -Dsonar.branch.name=main -Dsonar.organization=$SONAR_ORGANIZATION -Dsonar.projectKey=$SONAR_PROJECT_KEY -Dsonar.cfamily.build-wrapper-output=cfamily-output          
-#         env:
-#           SONAR_PROJECT_KEY: phil-nash-sonarsource_cpp-test-1
-#           SONAR_PROJECT_NAME: cpp-test-1
-#           SONAR_ORGANIZATION: phil-nash-sonarsource
-#           SONAR_HOST_URL: https://sonarcloud.io
-#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#         run: |
-#           mkdir $HOME/.sonar
-#           export SONAR_SCANNER_VERSION=4.2.0.1873
-#           export SONAR_SCANNER_HOME=$HOME/.sonar/sonar-scanner-$SONAR_SCANNER_VERSION-linux
+          sonar-scanner-4.4.0.2170-linux/bin/sonar-scanner -Dsonar.host.url=https://sonarcloud.io -Dsonar.branch.name=main -Dsonar.organization=$SONAR_ORGANIZATION -Dsonar.projectKey=$SONAR_PROJECT_KEY -Dsonar.cfamily.build-wrapper-output=cfamily-output
           
-#           # download sonar-scanner
-#           curl -sSLo $HOME/.sonar/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONAR_SCANNER_VERSION-linux.zip 
-#           unzip -o $HOME/.sonar/sonar-scanner.zip -d $HOME/.sonar/
-#           export PATH=$SONAR_SCANNER_HOME/bin:$PATH
-#           export SONAR_SCANNER_OPTS="-server"
-          
-#           # download build-wrapper
-#           curl -sSLo $HOME/.sonar/build-wrapper-linux-x86.zip https://sonarcloud.io/static/cpp/build-wrapper-linux-x86.zip
-#           unzip -o $HOME/.sonar/build-wrapper-linux-x86.zip -d $HOME/.sonar/
-#           export PATH=$HOME/.sonar/build-wrapper-linux-x86:$PATH
-
-#          build-wrapper-linux-x86-64 --out-dir build_wrapper_output_directory cmake -Bbuild -H$GITHUB_WORKSPACE \
-#                -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_STANDARD=17
-                
-#          [[ -v SONAR_TOKEN ]] && SONAR_TOKEN_CMD_ARG="-Dsonar.login=${SONAR_TOKEN}"
-#          [[ -v SONAR_ORGANIZATION ]] && SONAR_ORGANIZATION_CMD_ARG="-Dsonar.organization=${SONAR_ORGANIZATION}"
-#          [[ -v SONAR_PROJECT_NAME ]] && SONAR_PROJECT_NAME_CMD_ARG="-Dsonar.projectName=${SONAR_PROJECT_NAME}#"
-#          SONAR_OTHER_ARGS="-Dsonar.projectVersion=1.0 -Dsonar.sources=. -Dsonar.cfamily.build-wrapper-output=build_wrapper_output_directory -Dsonar.sourceEncoding=UTF-8"
-#          sonar-scanner -Dsonar.host.url="${SONAR_HOST_URL}" -Dsonar.projectKey=${SONAR_PROJECT_KEY} ${SONAR_OTHER_ARGS} ${SONAR_PROJECT_NAME_CMD_ARG} ${SONAR_TOKEN_CMD_ARG} ${SONAR_ORGANIZATION_CMD_ARG}
-
-#      - name: SonarCloud Scan
-#        uses: SonarSource/sonarcloud-github-action@master
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

@@ -30,7 +30,7 @@ jobs:
         shell: bash
         run: |
           cmake .
-          build-wrapper-linux-x86/build-wrapper-linux-x86-64 --out-dir cfamily-output cmake --config Release
+          build-wrapper-linux-x86/build-wrapper-linux-x86-64 --out-dir cfamily-output cmake
           
       - name: Scan with SonarCloud
         env:

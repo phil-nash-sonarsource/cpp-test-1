@@ -29,7 +29,7 @@ jobs:
       - name: Build
         shell: bash
         run: |
-          build-wrapper-linux-x86/build-wrapper-linux-x86-64 --out-dir cfamily-output cmake -Bbuild -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_STANDARD=17
+          build-wrapper-linux-x86/build-wrapper-linux-x86-64 --out-dir cfamily-output cmake --build build/ --config Release -DCMAKE_CXX_STANDARD=17
           
       - name: Scan with SonarCloud
         env:

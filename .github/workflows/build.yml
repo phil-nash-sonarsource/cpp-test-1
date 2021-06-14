@@ -29,8 +29,8 @@ jobs:
       - name: Build
         shell: bash
         run: |
-          mkdir build
-          build-wrapper-linux-x86/build-wrapper-linux-x86-64 --out-dir cfamily-output cmake --build build --config Release
+          cmake .
+          build-wrapper-linux-x86/build-wrapper-linux-x86-64 --out-dir cfamily-output cmake --config Release
           
       - name: Scan with SonarCloud
         env:

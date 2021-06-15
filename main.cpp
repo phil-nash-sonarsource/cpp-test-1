@@ -34,6 +34,30 @@ int too_complex( std::string_view sv, int other_val , int unused ) {
     return 0;
 }
 
+struct managed_object {
+    managed_object() {
+        std::cout << "ctor\n";
+    }
+    ~managed_object() {
+        std::cout << "dtor\n";
+    }
+    void* operator new( size_t size ) {
+        if( size > 1 ) {
+            throw std::domain_error("too big");
+        }
+        std::cout << "allocated\n";
+        return malloc(size);
+    }
+    void operator delete( void* addr ) {
+        std::cout << "deleted\n";
+        free(addr);
+    }
+};
+
 int main() {
     too_complex("Hello, World!", 42, 7);
+
+    managed_object* obj = new managed_object();
+    if( obj )
+        delete obj;
 }

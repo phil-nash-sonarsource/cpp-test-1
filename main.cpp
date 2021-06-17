@@ -60,7 +60,7 @@ char const* who() {
 }
 
 int main() {
-    too_complex(who(), 42, 7);
+    too_complex(who(), 42, 8);
 
     managed_object* obj = new managed_object();
     if( obj )

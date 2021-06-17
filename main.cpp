@@ -54,7 +54,7 @@ struct managed_object {
     }
 };
 
-char* who() {
+char const* who() {
     std::string me = "Me";
     return me.c_str();
 }

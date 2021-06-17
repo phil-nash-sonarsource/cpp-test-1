@@ -54,8 +54,13 @@ struct managed_object {
     }
 };
 
+char* who() {
+    std::string me = "Me";
+    return me.c_str();
+}
+
 int main() {
-    too_complex("Hello, World!", 42, 7);
+    too_complex("Hello, " + who(), 42, 7);
 
     managed_object* obj = new managed_object();
     if( obj )

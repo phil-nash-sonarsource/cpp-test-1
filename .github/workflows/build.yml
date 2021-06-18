@@ -35,7 +35,11 @@ jobs:
           cmake ..
           cd ..
           build-wrapper-linux-x86/build-wrapper-linux-x86-64 --out-dir cfamily-output cmake --build build/ --config Release
-          
+      - name: Cache Sonar Scanner cache
+        uses: actions/cache@v2
+        with:
+          path: sonar-cache
+      
       - name: Scan with SonarCloud
         env:
           SONAR_HOST_URL: https://sonarcloud.io

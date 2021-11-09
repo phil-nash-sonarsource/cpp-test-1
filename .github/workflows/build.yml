@@ -37,6 +37,7 @@ jobs:
           echo $GITHUB_PATH
       - name: SonarQube analysis
         run: |
+          echo $GITHUB_PATH
           sonar-scanner --define sonar.cfamily.build-wrapper-output=bw-output  
         env:
           SONAR_TOKEN: \${{ secrets.SONAR_TOKEN }}

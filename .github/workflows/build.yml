@@ -5,48 +5,29 @@ on:
       - main
   pull_request:
     types: [opened, synchronize, reopened]
-jobs:
-  sonarcloud:
-    name: SonarCloud
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      
-      - name: Install Build Wrapper
-        shell: bash
-        run: |
-          curl -L -O https://sonarcloud.io/static/cpp/build-wrapper-linux-x86.zip
-          unzip -o build-wrapper-linux-x86.zip
-      
-      - name: Install Sonar Scanner
-        shell: bash
-        run: |
-          curl -L -O https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.4.0.2170-linux.zip
-          unzip sonar-scanner-cli-4.4.0.2170-linux.zip
-          
-      - name: Build
-        shell: bash
-        run: |
-          rm -rf build
-          mkdir build
-          cd build
-          cmake ..
-          cd ..
-          build-wrapper-linux-x86/build-wrapper-linux-x86-64 --out-dir cfamily-output cmake --build build/ --config Release
 
-      - name: Cache Sonar Scanner cache
-        uses: actions/cache@v2
+jobs:
+  build:
+    runs-on: <image ready for your build toolchain>
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
         with:
-          key: cpp-test-cache
-          path: sonar-cache
-      
-      - name: Scan with SonarCloud
+          fetch-depth: 0
+
+      - name: Download and install the build wrapper, build the project
+        run: |
+          mkdir $HOME/.sonar
+          curl -sSLo $HOME/.sonar/build-wrapper-linux-x86.zip ${{ secrets.SONAR_HOST_URL }}/static/cpp/build-wrapper-linux-x86.zip
+          unzip -o $HOME/.sonar/build-wrapper-linux-x86.zip -d $HOME/.sonar/
+          $HOME/.sonar/build-wrapper-linux-x86/build-wrapper-linux-x86-64 --out-dir bw-output <your clean build command>
         env:
-          SONAR_HOST_URL: https://sonarcloud.io
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
+      - name: SonarQube analysis
+        uses: SonarSource/sonarqube-scan-action@v1.0.0
+        with:
+          args: -Dsonar.cfamily.build-wrapper-output=bw-output
+        env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        shell: bash
-        run: sonar-scanner-4.4.0.2170-linux/bin/sonar-scanner -Dsonar.branch.name=main -Dsonar.cfamily.build-wrapper-output=cfamily-output
-          
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}

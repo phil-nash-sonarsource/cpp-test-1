@@ -34,10 +34,10 @@ jobs:
           curl -sSLo $HOME/.sonar/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-\${{ env.SONAR_SCANNER_VERSION }}-linux.zip
           unzip -o $HOME/.sonar/sonar-scanner.zip -d $HOME/.sonar/
           echo "$HOME/.sonar/sonar-scanner-\${{ env.SONAR_SCANNER_VERSION }}-linux/bin" >> $GITHUB_PATH
-          cat path1: $GITHUB_PATH
+          cat $GITHUB_PATH
       - name: SonarQube analysis
         run: |
-          cat path2: $GITHUB_PATH
+          cat $GITHUB_PATH
           $HOME/.sonar/sonar-scanner-\${{ env.SONAR_SCANNER_VERSION }}-linux/bin/sonar-scanner --define sonar.cfamily.build-wrapper-output=bw-output  
         env:
           SONAR_TOKEN: \${{ secrets.SONAR_TOKEN }}
